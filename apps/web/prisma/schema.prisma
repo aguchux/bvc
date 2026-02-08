@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client"
+    output   = "../lib/db/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model Log {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    level     String
+    message   String
+    metadata  Json?
+}
+
+enum UserRole {
+    STUDENT
+    ADMIN
+}
+
+model User {
+    id             Int             @id @default(autoincrement())
+    openId         String          @unique @db.VarChar(64)
+    name           String?
+    email          String?         @db.VarChar(320)
+    loginMethod    String?         @db.VarChar(64)
+    role           UserRole        @default(STUDENT)
+    createdAt      DateTime        @default(now())
+    updatedAt      DateTime        @updatedAt
+    lastSignedIn   DateTime        @default(now())
+    moodleUser     MoodleUser?
+    enrollments    Enrollment[]
+    grades         Grade[]
+    userPreference UserPreference?
+}
+
+model MoodleUser {
+    id              Int      @id @default(autoincrement())
+    userId          Int      @unique
+    moodleId        Int      @unique
+    username        String   @db.VarChar(255)
+    email           String?  @db.VarChar(320)
+    firstname       String?  @db.VarChar(255)
+    lastname        String?  @db.VarChar(255)
+    profileImageUrl String?
+    department      String?  @db.VarChar(255)
+    city            String?  @db.VarChar(255)
+    country         String?  @db.VarChar(255)
+    cachedAt        DateTime @default(now())
+    updatedAt       DateTime @default(now()) @updatedAt
+
+    user User @relation(fields: [userId], references: [id])
+}
+
+model Course {
+    id              Int      @id @default(autoincrement())
+    moodleCourseId  Int      @unique
+    fullname        String   @db.VarChar(255)
+    shortname       String   @db.VarChar(255)
+    summary         String?
+    summaryformat   Int?
+    format          String?  @db.VarChar(50)
+    categoryId      Int?
+    categoryName    String?  @db.VarChar(255)
+    courseImage     String?
+    enrollmentCount Int      @default(0)
+    cachedAt        DateTime @default(now())
+    updatedAt       DateTime @default(now()) @updatedAt
+
+    enrollments Enrollment[]
+    grades      Grade[]
+}
+
+model Enrollment {
+    id                 Int       @id @default(autoincrement())
+    userId             Int
+    courseId           Int
+    moodleEnrollmentId Int
+    role               String?   @db.VarChar(50)
+    status             String    @default("active") @db.VarChar(50)
+    enrolledAt         DateTime?
+    cachedAt           DateTime  @default(now())
+    updatedAt          DateTime  @default(now()) @updatedAt
+
+    user   User   @relation(fields: [userId], references: [id])
+    course Course @relation(fields: [courseId], references: [id])
+}
+
+model Grade {
+    id                Int      @id @default(autoincrement())
+    userId            Int
+    courseId          Int
+    moodleGradeItemId Int
+    itemName          String?  @db.VarChar(255)
+    itemType          String?  @db.VarChar(50)
+    gradeRaw          String?
+    gradeMin          String?
+    gradeMax          String?
+    gradePercentage   String?
+    feedback          String?
+    feedbackFormat    Int?
+    cachedAt          DateTime @default(now())
+    updatedAt         DateTime @default(now()) @updatedAt
+
+    user   User   @relation(fields: [userId], references: [id])
+    course Course @relation(fields: [courseId], references: [id])
+}
+
+model UserPreference {
+    id                   Int       @id @default(autoincrement())
+    userId               Int       @unique
+    theme                String    @default("light") @db.VarChar(50)
+    language             String    @default("en") @db.VarChar(10)
+    notificationsEnabled Int       @default(1)
+    lastCacheRefresh     DateTime?
+    createdAt            DateTime  @default(now())
+    updatedAt            DateTime  @default(now()) @updatedAt
+
+    user User @relation(fields: [userId], references: [id])
+}

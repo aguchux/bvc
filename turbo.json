@@ -1,0 +1,44 @@
+{
+    "$schema": "https://turborepo.dev/schema.json",
+    "ui": "tui",
+    "tasks": {
+        "build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "inputs": [
+                "$TURBO_DEFAULT$",
+                ".env*"
+            ],
+            "outputs": [
+                ".next/**",
+                "!.next/cache/**"
+            ]
+        },
+        "lint": {
+            "dependsOn": [
+                "^lint"
+            ]
+        },
+        "check-types": {
+            "dependsOn": [
+                "^check-types"
+            ]
+        },
+        "dev": {
+            "cache": false,
+            "persistent": true
+        }
+    },
+    "globalEnv": [
+        "NODE_ENV",
+        "JWT_SECRET",
+        "DATABASE_URL",
+        "PUBLIC_MOODLE_BASE_URL",
+        "MOODLE_BASE_URL",
+        "MOODLE_SERVICE_TOKEN",
+        "PUBLIC_MOODLE_SERVICE_TOKEN",
+        "PUBLIC_MOODLE_LOGIN_SERVICE",
+        "MOODLE_LOGIN_SERVICE"
+    ]
+}

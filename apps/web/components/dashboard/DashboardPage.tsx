@@ -8,12 +8,12 @@ import { courses, stats, transactions } from "lib/data";
 import { useAuth } from "contexts/AuthContext";
 
 export default function DashboardPage() {
-    const { user } = useAuth();
-    const displayName = user?.firstname ?? user?.name ?? "Student";
-    const email = user?.email ?? "student@bvcbonny.edu.ng";
-    const studentId = user?.openId ?? user?.username ?? "—";
-    const roleLabel = user?.role ? user.role.toUpperCase() : "STUDENT";
-    const router = useRouter();
+  const { user } = useAuth();
+  const displayName = user?.firstname ?? user?.name ?? "Student";
+  const email = user?.email ?? "student@bvcbonny.edu.ng";
+  const studentId = user?.openId ?? user?.username ?? "—";
+  const roleLabel = user?.role ? user.role.toUpperCase() : "STUDENT";
+  const router = useRouter();
 
   return (
     <>
@@ -50,13 +50,13 @@ export default function DashboardPage() {
             <p className="mt-1 text-sm text-slate-600">First Semester</p>
           </div>
 
-                    <button
-                        type="button"
-                        className="w-full rounded-lg bg-[#c7a37a] px-4 py-2 text-sm font-semibold text-white hover:opacity-95 md:w-auto"
-                        onClick={() => router.push("/dashboard/classroom")}
-                    >
-                        Go to Class
-                    </button>
+          <button
+            type="button"
+            className="w-full rounded-lg bg-[#c7a37a] px-4 py-2 text-sm font-semibold text-white hover:opacity-95 md:w-auto"
+            onClick={() => router.push("/dashboard/classroom")}
+          >
+            Go to Class
+          </button>
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

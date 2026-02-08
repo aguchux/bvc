@@ -91,7 +91,9 @@ export default function ExaminationsPage() {
               <div className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
                 {tile.label}
               </div>
-              <div className="mt-2 text-2xl font-bold text-slate-900">{tile.value}</div>
+              <div className="mt-2 text-2xl font-bold text-slate-900">
+                {tile.value}
+              </div>
             </div>
           ))}
         </div>

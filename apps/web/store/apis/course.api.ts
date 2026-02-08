@@ -44,7 +44,10 @@ export type CategoryListResponse = {
 
 export const courseApi = coreApi.injectEndpoints({
   endpoints: (builder) => ({
-    listCategories: builder.query<CategoryListResponse, CourseListParams | void>({
+    listCategories: builder.query<
+      CategoryListResponse,
+      CourseListParams | void
+    >({
       query: (params) => ({
         url: "/categories",
         params: {
@@ -55,7 +58,10 @@ export const courseApi = coreApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.categories.map(({ id }) => ({ type: "Categories" as const, id })),
+              ...result.categories.map(({ id }) => ({
+                type: "Categories" as const,
+                id,
+              })),
               { type: "Categories", id: "LIST" },
             ]
           : [{ type: "Categories", id: "LIST" }],

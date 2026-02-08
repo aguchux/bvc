@@ -233,16 +233,16 @@ function CourseCard({
             alt={course.title}
             className="h-full w-full object-cover"
           />
-        {/* MIT ribbon */}
-        <div className="absolute left-0 top-0">
-          <div className="bg-red-500 px-3 py-2 text-xs font-bold text-white">
-            MIT
+          {/* MIT ribbon */}
+          <div className="absolute left-0 top-0">
+            <div className="bg-red-500 px-3 py-2 text-xs font-bold text-white">
+              MIT
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="p-4">
+      <div className="p-4">
         <div className="text-sm font-semibold text-slate-900">
           {course.title}
         </div>

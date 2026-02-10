@@ -1,0 +1,26 @@
+::Excel Cell::
+In Microsoft Excel, what term refers to the intersection of a row and column?
+{
+~Formula Bar
+~Worksheet
+=Cell
+~Cell Range
+}
+
+::Excel Format Group::
+Which group on the Home tab is used to format numeric values?
+{
+~Font group
+~Alignment group
+~Data group
+=Numbers group
+}
+
+::Format Cells Shortcut::
+Which keyboard shortcut opens the Format Cells dialog?
+{
+~Ctrl + B
+=Ctrl + 1
+~Ctrl + Z
+~Ctrl + C
+}

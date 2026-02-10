@@ -12,8 +12,10 @@ function CourseTopNav() {
           <div className="flex items-center gap-2 text-white">
             <div className="h-9 w-9 rounded-lg bg-white/10" />
             <div className="leading-tight">
-              <div className="text-sm font-bold tracking-wide">MIVA</div>
-              <div className="text-[11px] text-white/70">OPEN UNIVERSITY</div>
+              <div className="text-sm font-bold tracking-wide">BVC Portal</div>
+              <div className="text-[11px] text-white/70">
+                Bonny Vocational Center
+              </div>
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "contexts/AuthContext";
 
 type CourseStatus = "In progress" | "Past" | "All";
@@ -152,6 +153,8 @@ export default function ClassroomPage() {
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
 
+  const router = useRouter();
+
   const pageCourses = useMemo(() => {
     const safePage = Math.min(Math.max(page, 1), totalPages);
     const start = (safePage - 1) * pageSize;
@@ -159,7 +162,13 @@ export default function ClassroomPage() {
   }, [filtered, page, pageSize, totalPages]);
 
   function goToCourse(course: Course) {
-    alert(`Simulated: open course ${course.code}`);
+    const courseId = course.id;
+    const firstActivityId = "overview";
+    router.push(
+      `/dashboard/classroom/course/${encodeURIComponent(
+        courseId,
+      )}/activity/${encodeURIComponent(firstActivityId)}`,
+    );
   }
 
   const { user } = useAuth();

@@ -1,8 +1,8 @@
 name: Dockerize Frontends
 on:
     push:
-        branches:
-            - main
+        tags:
+            - "v*.*.*"
     workflow_dispatch:
 env:
     REGISTRY: docker.io

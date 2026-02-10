@@ -19,18 +19,18 @@ const faqData: { title: string; items: FAQItem[] }[] = [
           "Depending on the programme, UTME is optional for some pathways. Submit your credentials to admissions for course-specific requirements.",
       },
       {
-        question: "Are Miva graduates eligible for NYSC?",
+        question: "Are BVC graduates eligible for NYSC?",
         answer:
-          "Yes, graduates from accredited Miva degrees qualify for NYSC once they complete their requirements.",
+          "Yes, graduates from accredited Bonny Vocational Center programmes qualify for NYSC once they complete their requirements.",
       },
       {
-        question: "What are the requirements to study at Miva Open University?",
+        question: "What are the requirements to study at Bonny Vocational Center?",
         answer:
           "Typically, you need a secondary school certificate or equivalent plus any specific course prerequisites.",
       },
       {
         question:
-          "What is the duration of a bachelor’s degree programme at Miva?",
+          "What is the duration of a bachelor’s degree programme at Bonny Vocational Center?",
         answer:
           "Most bachelor’s degrees range from three to five years depending on your pace (full-time/part-time).",
       },
@@ -40,7 +40,7 @@ const faqData: { title: string; items: FAQItem[] }[] = [
           "They are a different modality focused on flexibility and accessibility without sacrificing academic standards.",
       },
       {
-        question: "How much is Miva’s tuition fee?",
+        question: "How much is Bonny Vocational Center’s tuition fee?",
         answer:
           "Tuition varies by programme. Check the programme page or contact admissions for current fees and payment plans.",
       },
@@ -142,7 +142,7 @@ const HomeFAQsSection = () => {
               </h2>
               <p className="text-sm leading-7 text-slate-600">
                 Get in touch with an application specialist to get more
-                information about the Miva University application process.
+                information about the Bonny Vocational Center application process.
               </p>
               <div className="text-sm text-slate-600">
                 <div className="flex items-center gap-2">

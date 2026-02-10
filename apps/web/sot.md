@@ -218,7 +218,7 @@ Catering and Hospitality
 
 REQUEST FOR PROPOSAL - B250004B…
 
-5. Learning Model (Benchmark: Miva Open University)
+5. Learning Model (Benchmark: Bonny Vocational Center)
    Flexible & Blended Learning Approach
 
 BVC adopts a blended learning model, combining:

@@ -4,6 +4,26 @@ import { getMoodleClient } from "../../../lib/moodle";
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
+function stripDefaultCoursePayload(data: any[]): any[] {
+  if (!Array.isArray(data)) {
+    return [];
+  }
+
+  const frontPageId = 1;
+  return data.filter((course) => {
+    const id = Number(course?.id ?? 0);
+    if (id <= 0) {
+      return false;
+    }
+
+    if (id === frontPageId) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
 export async function GET(request: NextRequest) {
   const limitParam = request.nextUrl.searchParams.get("limit");
   const offsetParam = request.nextUrl.searchParams.get("offset");
@@ -13,12 +33,15 @@ export async function GET(request: NextRequest) {
   try {
     const moodleClient = getMoodleClient();
     const courses = await moodleClient.getPublicCourses();
+    const filteredCourses = stripDefaultCoursePayload(
+      Array.isArray(courses) ? courses : [],
+    );
     return NextResponse.json({
-      courses: Array.isArray(courses) ? courses : [],
+      courses: filteredCourses,
       meta: {
         offset,
         limit,
-        count: Array.isArray(courses) ? courses.length : 0,
+        count: filteredCourses.length,
       },
     });
   } catch (error) {

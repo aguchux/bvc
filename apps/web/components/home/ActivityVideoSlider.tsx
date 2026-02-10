@@ -15,11 +15,11 @@ type ActivityVideo = {
 const videos: ActivityVideo[] = [
   {
     id: 1,
-    title: "Key Moments from Miva Open University’s 2024 Matriculation",
+    title: "Key Moments from Bonny Vocational Center’s 2024 Matriculation",
     description:
-      "Former Vice President Yemi Osinbajo inspired students with insights on leadership while we celebrated the university’s ongoing commitment to access and inclusion.",
-    speaker: "Sim Shagaya’s Address, Chancellor, Miva Open University",
-    tag: "Miva Matriculation",
+      "Former Vice President Yemi Osinbajo inspired students with insights on leadership while we celebrated the campus’s ongoing commitment to access and inclusion.",
+    speaker: "Sim Shagaya’s Address, Chancellor, Bonny Vocational Center",
+    tag: "BVC Matriculation",
     image: "/sliders/1.jpg",
   },
   {
@@ -69,7 +69,7 @@ const ActivityVideoSlider = () => {
                         Activity Highlights
                     </p>
                     <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-                        Watch how Miva Open University shapes practical learning
+                Watch how Bonny Vocational Center shapes practical learning
                     </h2>
                 </div> */}
 

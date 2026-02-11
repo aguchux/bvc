@@ -283,16 +283,13 @@ export class MoodleClient {
     /**
      *  Get course Photo (if available)
      */
-    async getCoursePhoto(courseId: number): Promise<string | null> {
-        const course = await this.getCourseById(courseId);
-        if (
-            course?.overviewfiles &&
-            Array.isArray(course.overviewfiles) &&
-            course.overviewfiles.length > 0
-        ) {
-            return `${course.overviewfiles[0]?.fileurl}&token=${this.token}`;
-        }
-        return null;
+    async getCoursePhoto(
+        courseId: number,
+        courseData?: MoodleCourseType | null,
+    ): Promise<string | null> {
+        const resolvedCourse = courseData ?? (await this.getCourseById(courseId));
+        const fileurl = resolvedCourse?.overviewfiles?.[0]?.fileurl ?? null;
+        return fileurl ? this.withToken(fileurl, this.token) : null;
     }
 
     /**
@@ -458,10 +455,20 @@ export class MoodleClient {
      * Get category details by ID
      * core_course_get_category
      */
-    async getCategoryById(categoryId: number): Promise<any> {
-        return this.call("core_course_get_category", {
-            id: categoryId,
+    async getCategoryById(categoryId: number): Promise<any | null> {
+        const res = await this.call<any[]>("core_course_get_categories", {
+            criteria: [
+                {
+                    key: "id",
+                    value: String(categoryId),
+                },
+            ],
         });
+
+        if (Array.isArray(res) && res.length > 0) {
+            return res[0];
+        }
+        return null;
     }
 
     /**

@@ -19,6 +19,7 @@ const FALLBACK_BACKGROUND =
 type CourseParams = {
     course: MoodleCourseType;
     photoUrl: string | null;
+    photoProxyUrl?: string | null;
     contents: any[];
     category?: { id: number; name: string } | null;
 };
@@ -36,6 +37,7 @@ const formatTimestamp = (timestamp?: number) => {
 export const CourseDetailScreen = ({
     course,
     photoUrl,
+    photoProxyUrl,
     contents,
     category,
 }: CourseParams) => {
@@ -51,6 +53,7 @@ export const CourseDetailScreen = ({
     }
 
     const summary = stripHtml(course.summary);
+    const heroImage = photoProxyUrl ?? photoUrl ?? FALLBACK_BACKGROUND;
 
     return (
         <main className="mx-auto max-w-6xl space-y-8 px-6 py-10">
@@ -68,14 +71,15 @@ export const CourseDetailScreen = ({
                 <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)]">
                     <div className="space-y-4">
                         <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
-                            {photoUrl ? (
+                            {heroImage ? (
                                 <div className="relative h-64 w-full">
                                     <Image
-                                        src={photoUrl}
+                                        src={heroImage}
                                         alt={`Hero image for ${course.fullname}`}
                                         fill
                                         sizes="(max-width: 1024px) 100vw, 60vw"
                                         className="object-cover"
+                                        unoptimized
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/10 to-slate-900/50" />
                                 </div>

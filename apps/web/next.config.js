@@ -35,7 +35,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "bvc.golojan.com",
+        hostname: "bvc.nmseprep.com",
         port: "",
         pathname: "/**",
       },

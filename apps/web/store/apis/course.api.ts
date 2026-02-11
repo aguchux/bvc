@@ -27,6 +27,10 @@ export type CourseListMeta = {
     count: number;
 };
 
+export type CourseContentsResponse = {
+    contents: any[];
+};
+
 export type MoodleCategoryType = {
     id: number;
     name: string;
@@ -40,6 +44,24 @@ export type MoodleCategoryType = {
 export type CategoryListResponse = {
     categories: MoodleCategoryType[];
     meta: CourseListMeta;
+};
+
+export type EnrolledCoursesResponse = {
+    user?: {
+        id?: number;
+        username?: string;
+        fullname?: string;
+    };
+    courses?: MoodleCourseType[];
+    error?: string;
+};
+
+const normalizeCourseArray = (
+    payload?: MoodleCourseType[] | { courses?: MoodleCourseType[] } | null,
+) => {
+    if (Array.isArray(payload)) return payload;
+    if (payload && Array.isArray(payload.courses)) return payload.courses;
+    return [];
 };
 
 export const courseApi = coreApi.injectEndpoints({
@@ -103,20 +125,26 @@ export const courseApi = coreApi.injectEndpoints({
                 { type: "Courses", id: courseId },
             ],
         }),
-        getEnrolledCourses: builder.query<MoodleCourseType[], void>({
+        getCourseContents: builder.query<CourseContentsResponse, number>({
+            query: (courseId) => ({
+                url: `/courses/${courseId}/contents`,
+            }),
+            providesTags: (result, error, courseId) => [
+                { type: "Courses", id: courseId },
+            ],
+        }),
+        getEnrolledCourses: builder.query<EnrolledCoursesResponse, void>({
             query: () => ({
-                url: "/courses/enrolled",
+                url: "/courses/me",
             }),
             providesTags: (result) =>
-                result
-                    ? [
-                        ...result.map(({ id }) => ({
-                            type: "Courses" as const,
-                            id,
-                        })),
-                        { type: "Courses", id: "ENROLLED_LIST" },
-                    ]
-                    : [{ type: "Courses", id: "ENROLLED_LIST" }],
+                [
+                    ...normalizeCourseArray(result?.courses).map(({ id }) => ({
+                        type: "Courses" as const,
+                        id,
+                    })),
+                    { type: "Courses", id: "LIST" },
+                ],
         }),
         enrollInCourse: builder.mutation<any, number>({
             query: (courseId) => ({
@@ -139,4 +167,5 @@ export const {
     useGetErollmentStatusQuery,
     useGetEnrolledCoursesQuery,
     useEnrollInCourseMutation,
+    useGetCourseContentsQuery,
 } = courseApi;

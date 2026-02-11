@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CourseDetailScreen } from "./CourseDetailScreen";
-import { getAppOrigin } from "lib/app-url";
+import { getMoodleClient, getMoodleClientWithToken } from "lib/moodle";
 
 const stripHtml = (value?: string) => {
     if (!value) return "";
@@ -12,27 +12,6 @@ type CourseRouteParams = {
     params: Promise<{ courseId?: string } | undefined>;
 };
 
-type CourseDetailPayload = {
-    course: MoodleCourseType;
-    photoUrl: string | null;
-    contents: any[];
-    category: { id: number; name?: string } | null;
-};
-
-async function loadCourse(courseId: number): Promise<CourseDetailPayload> {
-    const url = new URL(`/api/courses/${courseId}`, getAppOrigin());
-    const response = await fetch(url.toString(), { cache: "no-store" });
-    if (!response.ok) {
-        throw new Error(`Unable to fetch course (${response.status})`);
-    }
-
-    const payload = (await response.json()) as CourseDetailPayload;
-    if (!payload?.course) {
-        throw new Error("Course data missing");
-    }
-
-    return payload;
-}
 
 export async function generateMetadata({
     params,
@@ -48,12 +27,13 @@ export async function generateMetadata({
     }
 
     try {
-        const { course } = await loadCourse(courseId);
+        const client = getMoodleClient();
+        const course = await client.getCourseById(courseId);
         return {
-            title: `${course.fullname} — Bonny Vocational Center courses`,
+            title: `${course?.fullname} — Bonny Vocational Center courses`,
             description:
-                stripHtml(course.summary) ||
-                `Explore ${course.fullname} and enroll through the portal.`,
+                stripHtml(course?.summary) ||
+                `Explore ${course?.fullname} and enroll through the portal   `,
         };
     } catch (_error) {
         return {
@@ -74,14 +54,27 @@ export default async function CourseDetailPage({
         notFound();
     }
 
-    const { course, photoUrl, contents, category } = await loadCourse(courseId);
+    const client = getMoodleClient();
+    const course = await client.getCourseById(courseId);
+    const photoUrl = await client.getCoursePhoto(courseId);
+    const photoProxyUrl = photoUrl ? `/api/courses/${courseId}/photo` : null;
+    const contents = await client.getCourseContents(courseId);
+    const categoryData = await client.getCategoryById(course?.categoryid ?? 0);
 
+    const category = categoryData?.category;
+
+    if (!course) {
+        notFound();
+    }
     return (
-        <CourseDetailScreen
-            course={course}
-            photoUrl={photoUrl}
-            contents={contents}
-            category={category}
-        />
+        <>
+            <CourseDetailScreen
+                course={course}
+                photoUrl={photoUrl}
+                photoProxyUrl={photoProxyUrl}
+                contents={contents ?? []}
+                category={category}
+            />
+        </>
     );
 }

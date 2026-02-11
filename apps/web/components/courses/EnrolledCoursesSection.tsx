@@ -108,7 +108,7 @@ export default function EnrolledCoursesSection() {
                     immediately.
                 </div>
             ) : (
-                <section className="grid gap-6 md:grid-cols-2">
+                <section className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {courses.map((course) => {
                         const summary = stripHtml(course.summary);
                         return (
@@ -150,7 +150,7 @@ export default function EnrolledCoursesSection() {
 
                                     <div className="mt-auto flex items-center justify-between text-xs font-semibold uppercase tracking-[0.3em] text-[#0F5E78]">
                                         <Link
-                                            href={`/ courses / ${course.id} `}
+                                            href={`/courses/${course.id}`}
                                             className="inline-flex items-center gap-1"
                                         >
                                             View course <ArrowRight className="h-3 w-3" />

@@ -24,7 +24,8 @@ const faqData: { title: string; items: FAQItem[] }[] = [
           "Yes, graduates from accredited Bonny Vocational Center programmes qualify for NYSC once they complete their requirements.",
       },
       {
-        question: "What are the requirements to study at Bonny Vocational Center?",
+        question:
+          "What are the requirements to study at Bonny Vocational Center?",
         answer:
           "Typically, you need a secondary school certificate or equivalent plus any specific course prerequisites.",
       },
@@ -142,7 +143,8 @@ const HomeFAQsSection = () => {
               </h2>
               <p className="text-sm leading-7 text-slate-600">
                 Get in touch with an application specialist to get more
-                information about the Bonny Vocational Center application process.
+                information about the Bonny Vocational Center application
+                process.
               </p>
               <div className="text-sm text-slate-600">
                 <div className="flex items-center gap-2">

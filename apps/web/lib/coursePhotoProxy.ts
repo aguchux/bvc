@@ -21,7 +21,9 @@ function mapMoodleErrorToHttp(e: any) {
   return 502;
 }
 
-async function resolveCourseId(paramsPromise: Promise<{ courseId?: string } | undefined>) {
+async function resolveCourseId(
+  paramsPromise: Promise<{ courseId?: string } | undefined>,
+) {
   const resolvedParams = await paramsPromise;
   const rawId = resolvedParams?.courseId;
   if (!rawId) {
@@ -45,7 +47,8 @@ export async function proxyCoursePhotoResponse(
 
   const cookieHeader = request.headers.get("cookie") ?? "";
   const token =
-    getSessionToken(cookieHeader) ?? request.nextUrl.searchParams.get("moodleToken");
+    getSessionToken(cookieHeader) ??
+    request.nextUrl.searchParams.get("moodleToken");
 
   const moodleClient = token
     ? getMoodleClientWithToken(token)

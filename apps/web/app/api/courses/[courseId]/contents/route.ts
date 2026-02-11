@@ -15,7 +15,10 @@ export async function GET(
   const resolvedParams = await params;
   const rawId = resolvedParams?.courseId;
   if (!rawId) {
-    return NextResponse.json({ error: "Course ID is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Course ID is required" },
+      { status: 400 },
+    );
   }
 
   const courseId = Number(rawId);

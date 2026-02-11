@@ -7,14 +7,14 @@ import TestimoniesReel from "../../components/home/TestimoniesReel";
 import "./page.module.css";
 
 export default function Page() {
-    return (
-        <>
-            <HomeHero />
-            <AboutVideoSection />
-            <ProgrammesCarousel />
-            <TestimoniesReel />
-            <ActivityVideoSlider />
-            <HomeFAQsSection />
-        </>
-    );
+  return (
+    <>
+      <HomeHero />
+      <AboutVideoSection />
+      <ProgrammesCarousel />
+      <TestimoniesReel />
+      <ActivityVideoSlider />
+      <HomeFAQsSection />
+    </>
+  );
 }

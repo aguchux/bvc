@@ -1,5 +1,5 @@
 import CourseActivityPage from "components/courseview/CourseActivityPage";
 
-export default function ActivityPage() {
+export default function Page() {
   return <CourseActivityPage />;
 }
